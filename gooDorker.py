@@ -39,6 +39,15 @@ def generate_dorks(domain):
     ]
     dorks.extend(file_dorks)
 
+   # Search for public available sql stuff - still in test
+    sql_dorks = [
+        f'site:{domain} intitle:"index of" "/etc/mysql/"',
+        f'site:{domain} intitle:"index of" "postgresql.conf"',
+        f'site:{domain} intitle:"index of" "mysql.log" | "mysql.logs"',
+        f'site:{domain} intext:backup.sql intitle:index.of'
+    ]
+    dorks.extend(sql_dorks)
+
     return dorks
 
 # Function to perform Google search and output results in the command line
