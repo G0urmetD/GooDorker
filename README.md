@@ -1,5 +1,5 @@
 # GooDorker
-Small tool to automate google dorks search with one input parameter for the domain.
+Small tool to automate google dorks search.
 
 ## Installation
 ```Bash
