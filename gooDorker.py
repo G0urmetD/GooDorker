@@ -162,6 +162,11 @@ def perform_search(domain, rate_limit, user_agents):
             print(f"{Fore.YELLOW}{url}")
         print()  # Empty line between search results
 
+        # Add random pause after each search
+        random_pause = random.uniform(1.0, 5.0)  # Generate random pause between 1 and 3 seconds
+        print(f"{Fore.BLUE}[INFO] Waiting for {random_pause:.2f} seconds before next search...")
+        time.sleep(random_pause)  # Wait for the random time before next search
+
 if __name__ == "__main__":
     # Print ASCII banner
     print(ascii_banner)
