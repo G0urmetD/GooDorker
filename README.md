@@ -13,6 +13,9 @@ python3 gooDorker.py -d example.com
 
 # start google dork search with domain input and rate limit to 10 seconds
 python3 gooDorker.py -d example.com -r 10
+
+# usind random user-agents for searches
+python3 gooDorker.py -d example.com --random -u user-agents.txt
 ```
 
 ## gooDorker-api.py
