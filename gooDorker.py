@@ -1,4 +1,5 @@
 import argparse
+import random
 from googlesearch import search as google_search
 from colorama import init, Fore, Style
 
@@ -17,8 +18,13 @@ ascii_banner = f"""
                                                      
                                                      
 {Fore.RED}Author: G0urmetD (403 - Forbidden)
-{Fore.RED}version: 1.0                                          
+{Fore.RED}version: 1.2                                          
 """
+
+# Function to read user agents from file
+def read_user_agents(filename):
+    with open(filename, 'r') as file:
+        return [line.strip() for line in file]
 
 # Function to generate Google Dorks
 def generate_dorks(domain):
@@ -144,14 +150,15 @@ def generate_dorks(domain):
 
     return dorks
 
-# Function to perform Google search and output results in the command line
-def perform_search(domain, rate_limit):
+# Function to perform Google search with a random user-agent
+def perform_search(domain, rate_limit, user_agents):
     dorks = generate_dorks(domain)
 
     # Perform searches
     for dork in dorks:
+        user_agent = random.choice(user_agents)
         print(f"{Fore.GREEN}[*] Searching for: {dork}")
-        for url in google_search(dork, num=10, stop=10, pause=rate_limit):
+        for url in google_search(dork, num=10, stop=10, pause=rate_limit, user_agent=user_agent):
             print(f"{Fore.YELLOW}{url}")
         print()  # Empty line between search results
 
@@ -163,7 +170,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Google Dorking Tool')
     parser.add_argument('-d', '--domain', type=str, required=True, help='Domain to search for')
     parser.add_argument('-r', '--rate-limit', type=float, default=5.0, help='Rate limit in seconds between searches')
+    parser.add_argument('--random', action='store_true', help='Use random user agents')
+    parser.add_argument('-u', '--user-agents-file', type=str, default='user_agents.txt', help='File containing user agents')
     args = parser.parse_args()
 
+    # Read user agents from file
+    if args.random:
+        user_agents = read_user_agents(args.user_agents_file)
+    else:
+        user_agents = None
+
     # Perform searches and output results in command line
-    perform_search(args.domain, args.rate_limit)
+    perform_search(args.domain, args.rate_limit, user_agents)
